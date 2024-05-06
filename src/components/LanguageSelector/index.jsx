@@ -1,11 +1,12 @@
-"use client";
-import React, { useContext, useEffect, useState } from "react";
-import styles from "./languageSelector.module.scss";
-import { LANGUAGES } from "@/constants";
-import { LanguageContext } from "@/context/LanguageProvider";
+'use client';
+
+import React, { useContext, useEffect, useState } from 'react';
+import styles from './languageSelector.module.scss';
+import { LANGUAGES } from '../../constants';
+import { LanguageContext } from '../../context/LanguageProvider';
 
 // The language selector now uses the language context
-const LanguageSelector = () => {
+function LanguageSelector() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
@@ -13,7 +14,7 @@ const LanguageSelector = () => {
   const { selectedLanguage, handleChange } = useContext(LanguageContext);
 
   // Prevent the language selector from rendering on the server
-  if (!mounted) return <></>;
+  if (!mounted) return null;
 
   return (
     <div className={styles.languageSelector}>
@@ -26,6 +27,6 @@ const LanguageSelector = () => {
       </select>
     </div>
   );
-};
+}
 
 export default LanguageSelector;

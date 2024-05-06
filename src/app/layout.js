@@ -1,16 +1,16 @@
-import React from "react";
-import PropTypes from "prop-types";
-import "./globals.scss";
-import { Inter } from "next/font/google";
-import LanguageProvider from "@/context/LanguageProvider";
-import LanguageSelector from "@/components/LanguageSelector";
+import React from 'react';
+import PropTypes from 'prop-types';
+import './globals.scss';
+import { Inter } from 'next/font/google';
+import LanguageProvider from '../context/LanguageProvider';
+import LanguageSelector from '../components/LanguageSelector';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: "Itinerary",
+  title: 'Itinerary',
   description:
-    "Itinerary web app",
+    'Itinerary web app',
 };
 
 export default function RootLayout({ children }) {
