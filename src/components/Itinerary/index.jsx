@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
@@ -135,14 +135,22 @@ const markerColors = ['blue', 'red', 'lightgreen', 'mediumpurple', 'yellow', 'pu
 
 const Itinerary = () => {
   const mapRef = useRef(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (mapRef?.current) {
+    if(!mounted) {
+      setMounted(true);
+    }
+    if (mounted && mapRef?.current) {
       const bounds = locations.map(location => [location.lat, location.lng]);
       bounds.push([hotel.lat, hotel.lng]);  // Add the hotel to the bounds
       mapRef.current.fitBounds(bounds);
     }
   }, [mapRef.current]);
+
+  if(!mounted) {
+    return <p>Loading...</p> 
+  }
 
   return (
     <MapContainer center={[0, 0]} zoom={13} style={{ height: "100vh", width: "100%" }} ref={mapRef}>
