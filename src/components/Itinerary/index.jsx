@@ -11,7 +11,7 @@ const locations = [
     name: "Recogida del coche en Madrid",
     lat: 40.451123,
     lng: -3.5971919,
-    description: "Recoge tu coche en el Barajas",
+    description: "Recoge tu coche en el NH Barajas",
     duration: "30 minutes"
   },
   {
