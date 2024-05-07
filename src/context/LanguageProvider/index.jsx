@@ -1,7 +1,8 @@
-"use client";
-import { LANGUAGES, SPANISH } from "@/constants";
-import propTypes from "prop-types";
-import React, { createContext, useState } from "react";
+'use client';
+
+import propTypes from 'prop-types';
+import React, { createContext, useState } from 'react';
+import { LANGUAGES, SPANISH } from '../../constants';
 
 // Create a new context for the language
 export const LanguageContext = createContext();
@@ -17,6 +18,7 @@ const LanguageProvider = ({ children }) => {
 
   // The context value is now an object that contains both the selected language
   // and the function to change it
+  // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = { selectedLanguage, handleChange };
 
   // The provider is wrapped around the children components
