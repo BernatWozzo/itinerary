@@ -2,7 +2,7 @@
   position: fixed;
   right: 0;
   top: 0;
-  width: 20vw;
+  width: 25vw;
   min-width: 300px;
   height: 100vh;
   transition: transform 0.3s ease-in-out;
@@ -23,7 +23,7 @@
 }
 
 .title {
-  font-size: 1.5em;
+  font-size: 1.2em;
   font-weight: bold;
   margin-bottom: 10px;
 }
@@ -33,10 +33,14 @@
   &:last-child {
     margin-bottom: 100px;
   }
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
 }
 
 .dayTitle {
-  font-size: 1.25em;
+  font-size: 1em;
   text-decoration: underline;
   font-weight: bold;
   margin-bottom: 5px;
@@ -44,6 +48,13 @@
 
 .stopItem {
   margin-bottom: 10px;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 12px;
+  >* {
+    margin-right: 5px;
+  }
 }
 
 .stopButton {
@@ -55,6 +66,7 @@
   text-align: left;
   cursor: pointer;
   border-radius: 5px;
+  font-size: 10px;
   transition: background-color 0.2s, border-color 0.2s;
 
   &:hover {
@@ -63,20 +75,11 @@
   }
 }
 
-.stopDetails {
-  padding-left: 15px;
-  font-size: 0.9em;
-}
-
-.reservationLink {
+.reservationLink,.directionsLink {
   color: #007BFF;
   text-decoration: none;
   display: flex;
   align-items: center;
-
-  &:hover {
-    text-decoration: underline;
-  }
 
   svg {
     margin-left: 5px;
@@ -99,8 +102,4 @@
   align-items: center;
   justify-content: center;
   transition: background-color 0.2s;
-
-  &:hover {
-    background-color: #0056b3;
-  }
 }

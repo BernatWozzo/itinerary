@@ -45,25 +45,36 @@ const Legend = ({ stops, onClickStop }) => {
                   <button className={styles.stopButton} onClick={() => onClickStop(stop)} type="button">
                     {`${stop?.startHour} - ${stop?.endHour} ${stop.name}`}
                   </button>
-                  <div className={styles.stopDetails}>
-                    {stop.pricePerAdult > 0 && (
+                  {/* enseñar precio si hay */}
+                  {stop.pricePerAdult > 0 && (
                     <p>
                       Precio por adulto:
                       {stop.pricePerAdult}
                       {' '}
                       €
                     </p>
-                    )}
-                    {stop.reservation && (
-                      <p>
-                        <a href={stop.reservationLink} target="_blank" rel="noopener noreferrer" className={styles.reservationLink}>
-                          Reservar aquí
-                          {' '}
-                          <FaExternalLinkAlt />
-                        </a>
-                      </p>
-                    )}
-                  </div>
+                  )}
+                  <p>
+                    <a
+                      href={`https://www.google.com/maps/dir/?api=1&destination=${stop.lat},${stop.lng}&travelmode=driving`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.directionsLink}
+                    >
+                      Maps
+                      {' '}
+                      <FaExternalLinkAlt />
+                    </a>
+                  </p>
+                  {stop.reservation && (
+                  <p>
+                    <a href={stop.reservationLink} target="_blank" rel="noopener noreferrer" className={styles.reservationLink}>
+                      Reservar
+                      {' '}
+                      <FaExternalLinkAlt />
+                    </a>
+                  </p>
+                  )}
                 </li>
               ))}
             </ul>
