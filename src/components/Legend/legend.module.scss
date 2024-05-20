@@ -7,7 +7,7 @@
   height: 100vh;
   transition: transform 0.3s ease-in-out;
   background-color: white;
-  box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
   z-index: 1000;
 
   &.hidden {
@@ -30,13 +30,20 @@
 
 .day {
   margin-bottom: 15px;
-  padding: 15px;
+  &:last-child {
+    margin-bottom: 100px;
+  }
 }
 
 .dayTitle {
   font-size: 1.25em;
+  text-decoration: underline;
   font-weight: bold;
   margin-bottom: 5px;
+}
+
+.stopItem {
+  margin-bottom: 10px;
 }
 
 .stopButton {
@@ -53,6 +60,26 @@
   &:hover {
     background-color: #e9e9e9;
     border-color: #d0d0d0;
+  }
+}
+
+.stopDetails {
+  padding-left: 15px;
+  font-size: 0.9em;
+}
+
+.reservationLink {
+  color: #007BFF;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  svg {
+    margin-left: 5px;
   }
 }
 

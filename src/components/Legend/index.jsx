@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
+import { FaExternalLinkAlt } from 'react-icons/fa'; // Import the icon for links
 import styles from './legend.module.scss'; // Import the SCSS module
 
 const Legend = ({ stops, onClickStop }) => {
@@ -9,12 +10,21 @@ const Legend = ({ stops, onClickStop }) => {
     setIsVisible(!isVisible);
   };
 
+  // Format date to a readable format
+  const formatDate = (dateStr) => {
+    const date = new Date(dateStr);
+    const options = {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+    };
+    return date.toLocaleDateString('es-ES', options);
+  };
+
   // Group stops by day using useMemo to optimize performance
   const stopsByDay = useMemo(() => {
     const grouped = stops.reduce((acc, stop) => {
-      const { day } = stop;
-      if (!acc[day]) acc[day] = [];
-      acc[day].push(stop);
+      const { date } = stop;
+      if (!acc[date]) acc[date] = [];
+      acc[date].push(stop);
       return acc;
     }, {});
     return grouped;
@@ -24,18 +34,36 @@ const Legend = ({ stops, onClickStop }) => {
     <div className={`${styles.legendWrapper} ${isVisible ? '' : styles.hidden}`}>
       <div className={styles.legend}>
         <h2 className={styles.title}>Planning</h2>
-        {Object.entries(stopsByDay).map(([day, stps]) => (
-          <div key={day} className={styles.day}>
+        {Object.entries(stopsByDay).map(([date, stps]) => (
+          <div key={date} className={styles.day}>
             <h3 className={styles.dayTitle}>
-              Día:
-              { day}
+              {formatDate(date)}
             </h3>
             <ul>
               {stps.map((stop, index) => (
-                <li key={index}>
+                <li key={index} className={styles.stopItem}>
                   <button className={styles.stopButton} onClick={() => onClickStop(stop)} type="button">
-                    {`${stop.positionInDay}. ${stop.name}`}
+                    {`${stop?.startHour} - ${stop?.endHour} ${stop.name}`}
                   </button>
+                  <div className={styles.stopDetails}>
+                    {stop.pricePerAdult > 0 && (
+                    <p>
+                      Precio por adulto:
+                      {stop.pricePerAdult}
+                      {' '}
+                      €
+                    </p>
+                    )}
+                    {stop.reservation && (
+                      <p>
+                        <a href={stop.reservationLink} target="_blank" rel="noopener noreferrer" className={styles.reservationLink}>
+                          Reservar aquí
+                          {' '}
+                          <FaExternalLinkAlt />
+                        </a>
+                      </p>
+                    )}
+                  </div>
                 </li>
               ))}
             </ul>
