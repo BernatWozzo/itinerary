@@ -6,11 +6,6 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import PropTypes from 'prop-types';
 
-const hotel = {
-  lat: 40.4918,
-  lng: -3.5695,
-};
-
 const markerColors = ['blue', 'red', 'lightgreen', 'mediumpurple', 'yellow', 'purple', 'orange'];
 
 const Itinerary = ({ stops, setMap }) => {
@@ -19,8 +14,7 @@ const Itinerary = ({ stops, setMap }) => {
   useEffect(() => {
     if (map) {
       setMap(map);
-      const bounds = stops?.map((location) => [location.lat, location.lng]);
-      bounds.push([hotel.lat, hotel.lng]); // Add the hotel to the bounds
+      const bounds = stops?.map((stop) => [stop.lat, stop.lng]);
       map?.fitBounds(bounds);
     }
   }, [map]);
@@ -37,45 +31,45 @@ const Itinerary = ({ stops, setMap }) => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {stops?.map((location, i) => {
-        const adjustedPosition = adjustCoordinates(location.lat, location.lng, i);
+      {stops?.map((stop, i) => {
+        const adjustedPosition = adjustCoordinates(stop.lat, stop.lng, i);
         const markerIcon = L.divIcon({
           className: 'custom-icon',
-          html: `<div style="background-color: ${markerColors[location.day - 1]}; width: 10px; height: 10px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; padding: 5px; border: 3px solid white; color: white;">
-                        <div>${location.day}</div>
+          html: `<div style="background-color: ${markerColors[stop.day - 1]}; width: 10px; height: 10px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; padding: 5px; border: 3px solid white; color: white;">
+                        <div>${stop.day}</div>
                     </div>`,
         });
 
         return (
           <Marker key={i} position={adjustedPosition} icon={markerIcon}>
             <Popup>
-              <h2>{location.name}</h2>
-              <p>{location.description}</p>
+              <h2>{stop.name}</h2>
+              <p>{stop.description}</p>
               <p>
                 Tiempo:
                 {' '}
-                {location.startHour}
+                {stop.startHour}
                 {' '}
                 -
                 {' '}
-                {location.endHour}
+                {stop.endHour}
               </p>
               <p>
                 Se necesita reserva:
                 {' '}
-                {location.reservation ? 'Si' : 'No'}
+                {stop.reservation ? 'Si' : 'No'}
               </p>
-              {location.reservation && (
+              {stop.reservation && (
               <p>
                 Reserva:
                 {' '}
-                <a href={location.reservationLink} target="_blank" rel="noopener noreferrer">{location.reservationLink}</a>
+                <a href={stop.reservationLink} target="_blank" rel="noopener noreferrer">{stop.reservationLink}</a>
               </p>
               )}
               <p>
                 Precio por adulto:
                 {' '}
-                {location.pricePerAdult}
+                {stop.pricePerAdult}
                 {' '}
                 €
               </p>
@@ -83,24 +77,6 @@ const Itinerary = ({ stops, setMap }) => {
           </Marker>
         );
       })}
-
-      {/* Add the hotel marker */}
-      {hotel && (
-      <Marker
-        position={[hotel.lat, hotel.lng]}
-        icon={L.divIcon({
-          className: 'hotel-icon',
-          html: `<div style="background-color: #123456; width: 10px; height: 10px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; padding: 5px; border: 3px solid white; color: white;">
-                            <div>H</div>
-                        </div>`,
-        })}
-      >
-        <Popup>
-          <h2>{hotel.name}</h2>
-          <p>{hotel.description}</p>
-        </Popup>
-      </Marker>
-      )}
     </MapContainer>
   );
 };
