@@ -5,6 +5,7 @@ import {
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import PropTypes from 'prop-types';
+import formatDate from '../../utils/helpers';
 
 const markerColors = ['blue', 'red', 'lightgreen', 'mediumpurple', 'yellow', 'purple', 'orange'];
 
@@ -35,8 +36,7 @@ const Itinerary = ({ stops, setMap }) => {
         const adjustedPosition = adjustCoordinates(stop.lat, stop.lng, i);
         const markerIcon = L.divIcon({
           className: 'custom-icon',
-          html: `<div style="background-color: ${markerColors[stop.day - 1]}; width: 10px; height: 10px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; padding: 5px; border: 3px solid white; color: white;">
-                        <div>${stop.day}</div>
+          html: `<div style="background-color: ${markerColors[Math.floor(Math.random() * markerColors.length)]}; width: 10px; height: 10px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; padding: 5px; border: 3px solid white; color: white;">
                     </div>`,
         });
 
@@ -45,6 +45,7 @@ const Itinerary = ({ stops, setMap }) => {
             <Popup>
               <h2>{stop.name}</h2>
               <p>{stop.description}</p>
+              <p>{formatDate(stop.date)}</p>
               <p>
                 Tiempo:
                 {' '}
@@ -53,25 +54,6 @@ const Itinerary = ({ stops, setMap }) => {
                 -
                 {' '}
                 {stop.endHour}
-              </p>
-              <p>
-                Se necesita reserva:
-                {' '}
-                {stop.reservation ? 'Si' : 'No'}
-              </p>
-              {stop.reservation && (
-              <p>
-                Reserva:
-                {' '}
-                <a href={stop.reservationLink} target="_blank" rel="noopener noreferrer">{stop.reservationLink}</a>
-              </p>
-              )}
-              <p>
-                Precio por adulto:
-                {' '}
-                {stop.pricePerAdult}
-                {' '}
-                €
               </p>
             </Popup>
           </Marker>

@@ -13,93 +13,102 @@
   &.hidden {
     transform: translateX(100%); // Move off-screen to the right
   }
-}
-
-.legend {
-  width: 100%;
-  height: 100%;
-  overflow-y: auto; // Allows vertical scrolling
-  padding: 10px;
-}
-
-.title {
-  font-size: 1.2em;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.day {
-  margin-bottom: 15px;
-  &:last-child {
-    margin-bottom: 100px;
+  .legend {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto; // Allows vertical scrolling
+    padding: 10px;
+    .title {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+    }
+    .day {
+      margin-bottom: 15px;
+      .dayTitle {
+        font-size: 1em;
+        text-decoration: underline;
+        font-weight: lighter;
+        margin-bottom: 5px;
+        text-transform: capitalize;
+      }
+      .stops {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      
+        .stop {
+          display: flex;
+          width: 100%;
+          height: 45px;
+          padding: 8px;
+          cursor: pointer;
+      
+          p {
+            margin: 0;
+          }
+      
+          .hours {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin-right: 10px; // Space between hours and separator
+            font-size: 12px;
+            width: 30px;
+          }
+      
+          .separator {
+            width: 5px;
+            height: 100%;
+            background-color: rgb(140, 218, 236); // Set the color of the separator
+            margin-right: 10px; // Space between separator and info
+            border-radius: 8px;
+          }
+      
+          .info {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            p,a {
+              font-size: 12px;
+            }
+            .links {
+              .directionsLink {
+                color: #007BFF;
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                width: fit-content;
+              
+                svg {
+                  margin-left: 5px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
-  ul {
-    list-style-type: none;
-    padding: 0;
+  .toggleButton {
+    position: absolute;
+    left: -40px;
+    top: 10%;
+    transform: translateY(-50%);
+    width: 35px;
+    height: 35px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
   }
 }
 
-.dayTitle {
-  font-size: 1em;
-  text-decoration: underline;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
 
-.stopItem {
-  margin-bottom: 10px;
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  font-size: 12px;
-  >* {
-    margin-right: 5px;
-  }
-}
 
-.stopButton {
-  display: block;
-  background-color: #f7f7f7;
-  border: 1px solid #e0e0e0;
-  padding: 5px 10px;
-  margin-bottom: 5px;
-  text-align: left;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 10px;
-  transition: background-color 0.2s, border-color 0.2s;
 
-  &:hover {
-    background-color: #e9e9e9;
-    border-color: #d0d0d0;
-  }
-}
-
-.reservationLink,.directionsLink {
-  color: #007BFF;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-
-  svg {
-    margin-left: 5px;
-  }
-}
-
-.toggleButton {
-  position: absolute;
-  left: -40px;
-  top: 10%;
-  transform: translateY(-50%);
-  width: 35px;
-  height: 35px;
-  background-color: #007BFF;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.2s;
-}

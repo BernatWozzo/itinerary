@@ -14,7 +14,7 @@ const Home = () => {
   const [map, setMap] = useState(null);
   const onClickStop = (stop) => {
     if (map) {
-      map.setView([stop.lat, stop.lng], 17, {
+      map.setView([stop.lat, stop.lng], 15, {
         animate: true, // Enable animation
         duration: 2.0, // Animation duration in seconds
         easeLinearity: 0.5, // Linear motion easing for the animation

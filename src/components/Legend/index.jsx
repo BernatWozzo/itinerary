@@ -1,22 +1,16 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FaExternalLinkAlt } from 'react-icons/fa'; // Import the icon for links
 import styles from './legend.module.scss'; // Import the SCSS module
+import formatDate from '../../utils/helpers';
 
 const Legend = ({ stops, onClickStop }) => {
   const [isVisible, setIsVisible] = useState(true); // State to toggle visibility
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
-  };
-
-  // Format date to a readable format
-  const formatDate = (dateStr) => {
-    const date = new Date(dateStr);
-    const options = {
-      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
-    };
-    return date.toLocaleDateString('es-ES', options);
   };
 
   // Group stops by day using useMemo to optimize performance
@@ -30,6 +24,10 @@ const Legend = ({ stops, onClickStop }) => {
     return grouped;
   }, [stops]);
 
+  const handleAnchorClick = (event) => {
+    event.stopPropagation();
+  };
+
   return (
     <div className={`${styles.legendWrapper} ${isVisible ? '' : styles.hidden}`}>
       <div className={styles.legend}>
@@ -39,45 +37,33 @@ const Legend = ({ stops, onClickStop }) => {
             <h3 className={styles.dayTitle}>
               {formatDate(date)}
             </h3>
-            <ul>
-              {stps.map((stop, index) => (
-                <li key={index} className={styles.stopItem}>
-                  <button className={styles.stopButton} onClick={() => onClickStop(stop)} type="button">
-                    {`${stop?.startHour} - ${stop?.endHour} ${stop.name}`}
-                  </button>
-                  {/* enseñar precio si hay */}
-                  {stop.pricePerAdult > 0 && (
-                    <p>
-                      Precio por adulto:
-                      {stop.pricePerAdult}
-                      {' '}
-                      €
-                    </p>
-                  )}
-                  <p>
-                    <a
-                      href={`https://www.google.com/maps/dir/?api=1&destination=${stop.lat},${stop.lng}&travelmode=driving`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.directionsLink}
-                    >
-                      Maps
-                      {' '}
-                      <FaExternalLinkAlt />
-                    </a>
-                  </p>
-                  {stop.reservation && (
-                  <p>
-                    <a href={stop.reservationLink} target="_blank" rel="noopener noreferrer" className={styles.reservationLink}>
-                      Reservar
-                      {' '}
-                      <FaExternalLinkAlt />
-                    </a>
-                  </p>
-                  )}
-                </li>
+            <div className={styles.stops}>
+              {stps?.map((stp) => (
+                <div className={styles.stop} onClick={() => onClickStop(stp)}>
+                  <div className={styles.hours}>
+                    <p>{stp?.startHour}</p>
+                    <p>{stp?.endHour}</p>
+                  </div>
+                  <div className={styles.separator} />
+                  <div className={styles.info}>
+                    <p>{stp?.name}</p>
+                    <div className={styles.links}>
+                      <a
+                        href={`https://www.google.com/maps/dir/?api=1&destination=${stp.lat},${stp.lng}&travelmode=driving`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.directionsLink}
+                        onClick={handleAnchorClick}
+                      >
+                        Maps
+                        {' '}
+                        <FaExternalLinkAlt />
+                      </a>
+                    </div>
+                  </div>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         ))}
       </div>
