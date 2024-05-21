@@ -28,6 +28,11 @@ const Legend = ({ stops, onClickStop }) => {
     event.stopPropagation();
   };
 
+  const onClickStopInternal = (stp) => {
+    const foundIndexStop = stops.findIndex((s) => s.name === stp.name);
+    onClickStop(foundIndexStop);
+  };
+
   return (
     <div className={`${styles.legendWrapper} ${isVisible ? '' : styles.hidden}`}>
       <div className={styles.legend}>
@@ -39,7 +44,7 @@ const Legend = ({ stops, onClickStop }) => {
             </h3>
             <div className={styles.stops}>
               {stps?.map((stp) => (
-                <div className={styles.stop} onClick={() => onClickStop(stp)}>
+                <div className={styles.stop} onClick={() => onClickStopInternal(stp)}>
                   <div className={styles.hours}>
                     <p>{stp?.startHour}</p>
                     <p>{stp?.endHour}</p>

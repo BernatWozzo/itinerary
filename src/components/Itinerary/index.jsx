@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   MapContainer, TileLayer, Marker, Popup,
 } from 'react-leaflet';
@@ -9,16 +9,30 @@ import formatDate from '../../utils/helpers';
 
 const markerColors = ['blue', 'red', 'lightgreen', 'mediumpurple', 'yellow', 'purple', 'orange'];
 
-const Itinerary = ({ stops, setMap }) => {
+const Itinerary = ({ stops, selectedStopIndex }) => {
   const [map, setInternalMap] = useState(null);
+  const markersRef = useRef([]);
 
   useEffect(() => {
     if (map) {
-      setMap(map);
       const bounds = stops?.map((stop) => [stop.lat, stop.lng]);
       map?.fitBounds(bounds);
     }
   }, [map]);
+
+  useEffect(() => {
+    if (selectedStopIndex !== null && markersRef.current[selectedStopIndex]) {
+      const marker = markersRef.current[selectedStopIndex];
+      map.setView(marker.getLatLng(), 15, {
+        animate: true, // Enable animation
+        duration: 1.0, // Animation duration in seconds
+        easeLinearity: 0.5, // Linear motion easing for the animation
+      });
+      setTimeout(() => {
+        marker.openPopup();
+      }, 1000); // Adjust the timeout to match the duration of the animation
+    }
+  }, [selectedStopIndex, map]);
 
   const adjustCoordinates = (lat, lng, index) => {
     const offset = 0.0001; // Small offset value
@@ -41,7 +55,12 @@ const Itinerary = ({ stops, setMap }) => {
         });
 
         return (
-          <Marker key={i} position={adjustedPosition} icon={markerIcon}>
+          <Marker
+            key={i}
+            position={adjustedPosition}
+            icon={markerIcon}
+            ref={(el) => markersRef.current[i] = el}
+          >
             <Popup>
               <h2>{stop.name}</h2>
               <p>{stop.description}</p>
@@ -63,9 +82,12 @@ const Itinerary = ({ stops, setMap }) => {
   );
 };
 
+Itinerary.defaultProps = {
+  selectedStopIndex: null,
+};
 Itinerary.propTypes = {
   stops: PropTypes.array.isRequired,
-  setMap: PropTypes.func.isRequired,
+  selectedStopIndex: PropTypes.number,
 };
 
 export default Itinerary;
