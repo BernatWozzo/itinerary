@@ -59,7 +59,7 @@ const Itinerary = ({ stops, selectedStopIndex }) => {
             key={i}
             position={adjustedPosition}
             icon={markerIcon}
-            ref={(el) => markersRef.current[i] = el}
+            ref={(el) => { markersRef.current[i] = el; }}
           >
             <Popup>
               <h2>{stop.name}</h2>
