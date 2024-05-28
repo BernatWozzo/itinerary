@@ -7,7 +7,7 @@ import styles from './legend.module.scss'; // Import the SCSS module
 import formatDate from '../../utils/helpers';
 
 const Legend = ({ stops, onClickStop }) => {
-  const [isVisible, setIsVisible] = useState(true); // State to toggle visibility
+  const [isVisible, setIsVisible] = useState(false); // State to toggle visibility
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
@@ -30,6 +30,7 @@ const Legend = ({ stops, onClickStop }) => {
 
   const onClickStopInternal = (stp) => {
     const foundIndexStop = stops.findIndex((s) => s.name === stp.name);
+    setIsVisible(false);
     onClickStop(foundIndexStop);
   };
 
